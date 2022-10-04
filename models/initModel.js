@@ -21,28 +21,39 @@ const initModels = () => {
     User.hasOne(Cart, { foreignKey: 'userId' })
     Cart.belongsTo(User)
 
-    //Cart 1 --> 1 order
-    Cart.hasOne(Order, { foreignKey: 'cartId' })
-    Order.belongsTo(Cart)
+    //Product 1 --> M ProductsImgs
+    Category.hasMany(ProductImg, { foreignKey: 'productId' })
+    Product.belongsTo(Product)
 
     //Categories 1 --> 1 products
     Category.hasOne(Product, { foreignKey: 'categoryId' })
     Product.belongsTo(Category)
 
-    //Product 1 --> M ProductsImgs
-    Category.hasMany(ProductImg, { foreignKey: 'productId' })
-    Product.belongsTo(Product)
+
+
+    //Cart 1 --> 1 order
+    Cart.hasOne(Order, { foreignKey: 'cartId' })
+    Order.belongsTo(Cart)
+
+
 
     //M product --> Cart
 
-    Product.belongsTo(Cart, {
-        through: 'productInCart',
-        foreignKey: 'productId'
-    });
-    Cart.belongsToMany(Product, {
-        through: 'productInCart',
-        foreignKey: 'cartId'
-    })
+    // 1 Product <---> 1 ProductInCart
+    Product.hasOne(ProductInCart, { foreignKey: 'productId' })
+    ProductInCart.belongsTo(Product)
+
+    // 1 Cart <---> M ProductInCart
+    Cart.hasMany(ProductInCart, { foreignKey: 'cartId' })
+    ProductInCart.belongsTo(Cart)
+    // Product.belongsTo(Cart, {
+    //     through: 'ProductInCart',
+    //     foreignKey: 'productId'
+    // });
+    // Cart.belongsToMany(Product, {
+    //     through: 'ProductInCart',
+    //     foreignKey: 'cartId'
+    // })
 
 
 }
