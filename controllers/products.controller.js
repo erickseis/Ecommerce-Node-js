@@ -4,6 +4,7 @@ const { Category } = require('../models/category.model');
 const { User } = require('../models/user.model');
 const { ProductImg } = require('../models/productImg.model')
 
+
 // Utils
 const { catchAsync } = require('../utils/catchAsync.util');
 const {
@@ -69,21 +70,23 @@ const getProductById = catchAsync(async (req, res, next) => {
 });
 
 const createProduct = catchAsync(async (req, res, next) => {
-  const { sessionUser } = req;
-  const { title, description, quantity, price, categoryId } = req.body;
+  const { title, description, price, categoryId, quantity } = req.body
+  const userId = req.sessionUser.id
 
-  const newProduct = await Product.create({
+  const product = await Product.create({
     title,
     description,
     quantity,
-    categoryId,
     price,
-    userId: sessionUser.id,
-  });
-  await uploadProductImgs(req.files, newProduct.id)
+    categoryId,
+    userId,
+  })
+
+  await uploadProductImgs(req.files, product.id)
+
   res.status(201).json({
     status: 'success',
-    data: { newProduct },
+    data: { product },
   })
 });
 

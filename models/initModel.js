@@ -23,7 +23,7 @@ const initModels = () => {
 
     //Product 1 --> M ProductsImgs
     Product.hasMany(ProductImg, { foreignKey: 'productId' })
-    Product.belongsTo(Product)
+    ProductImg.belongsTo(Product)
 
     //Categories 1 --> 1 products
     Category.hasOne(Product, { foreignKey: 'categoryId' })
