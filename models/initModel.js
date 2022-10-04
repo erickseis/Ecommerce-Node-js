@@ -22,7 +22,7 @@ const initModels = () => {
     Cart.belongsTo(User)
 
     //Product 1 --> M ProductsImgs
-    Category.hasMany(ProductImg, { foreignKey: 'productId' })
+    Product.hasMany(ProductImg, { foreignKey: 'productId' })
     Product.belongsTo(Product)
 
     //Categories 1 --> 1 products
@@ -46,14 +46,6 @@ const initModels = () => {
     // 1 Cart <---> M ProductInCart
     Cart.hasMany(ProductInCart, { foreignKey: 'cartId' })
     ProductInCart.belongsTo(Cart)
-    // Product.belongsTo(Cart, {
-    //     through: 'ProductInCart',
-    //     foreignKey: 'productId'
-    // });
-    // Cart.belongsToMany(Product, {
-    //     through: 'ProductInCart',
-    //     foreignKey: 'cartId'
-    // })
 
 
 }

@@ -1,4 +1,5 @@
 const { initializeApp } = require('firebase/app')
+const dotenv = require('dotenv')
 const {
     getStorage,
     ref,
@@ -9,9 +10,8 @@ const {
 // Model
 const { ProductImg } = require('../models/productImg.model')
 
-const dotenv = require('dotenv')
 
-dotenv.config()
+dotenv.config({ path: '../config.env' })
 
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,

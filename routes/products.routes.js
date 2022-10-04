@@ -25,6 +25,9 @@ const {
   productExists,
 } = require('../middlewares/products.middlewares');
 
+//Utils
+
+const { upload } = require('../utils/multer.util')
 const router = express.Router();
 
 router.get('/', getAllProducts);
@@ -32,10 +35,11 @@ router.get('/', getAllProducts);
 router.get('/categories', getAllCategories);
 
 router.get('/:id', productExists, getProductById);
+//Endpoints protecteds
 
 router.use(protectSession);
 
-router.post('/', createProductValidations, checkValidations, createProduct);
+router.post('/', upload.array('productImg', 5), createProductValidations, checkValidations, createProduct);
 
 router.post('/categories', createCategory);
 
