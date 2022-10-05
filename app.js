@@ -1,4 +1,7 @@
 const express = require('express');
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
 
 //Controllers
 const { globalErrorHandler } = require('./controllers/error.controller')
@@ -12,6 +15,15 @@ const app = express();
 
 //Enable express app to receive JSON data
 app.use(express.json());
+//add security headers;
+app.use(helmet());
+//compress responses
+app.use(compression());
+
+if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
+else if (process.env.NODE_ENV === 'production') app.use(morgan('combined'))
+app.use(morgan('dev'));
+
 
 //Define endpoints
 app.use('/api/v1/users', usersRouter);
